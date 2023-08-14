@@ -18,33 +18,37 @@ However, if you would want to create your own dataset and expand your labels, yo
     You should find lines of code like this:
 
 
-    IMAGES_PATH = 'images'
-
-
-    labels = ["Hello", "Thanks", "Yes", "No", "ILoveYou"]
-
-
-    num_imgs = 110
+        IMAGES_PATH = 'images'
+        labels = ["Hello", "Thanks", "Yes", "No", "ILoveYou"]
+        num_imgs = 110
 
 
     This is where you tell the program the amount of labels, as well as the number of images you want to take for each label.
     For example, in this default program, there are 5 labels and I want to take 110 images for each of them. You are free to change the amount of labels and the number of images for each labels to your liking. 2.
 
 3.  Once you are done modifying the DatasetCollector.py file, you can run the program using the command: "python DatasetCollector.py"
+
     There should be a new window pop up, with the image captured from your webcam. The program will take an image every 2 seconds (you can also change this in the DatasetCollector.py file), and you can change your pose between them. The program will keep taking images until it is done taking images for all labels.
+
     To keep track of your current label, there should be a line in terminal telling you which label you are currently taking images for, like this:
 
         Taking images for Hello
         Taking images for ILoveYou
         Taking images for Yes
 
-4.  After you are done taking the images, the program will close automatically and you should
+5.  After you are done taking the images, the program will close automatically and you should
     find all your taken images in the
-    “images” folder. It is recommended to extract all the taken images into a single folder (through copy-pasting, for example) to save time labelling these images later.
+    “images” folder.
 
-5.  When you're done extracting all the images into one folder, execute this command: "labelImg". A new window will pop up that will allow you to draw a box around your hand after you chose the folder that contains all your images.
+    It is recommended to extract all the taken images into a single folder (through copy-pasting, for example) to save time labelling these images later.
 
-6.  If labelImg crashes constantly with this message:
+7.  When you're done extracting all the images into one folder, execute this command: 
+        
+        labelImg 
+
+    A new window will pop up that will allow you to draw a box around your hand after you chose the folder that contains all your images.
+
+8.  If labelImg crashes constantly with this message:
 
         Traceback (most recent call last):
         File "[YOUR DIRECTORY]", line 530, in paintEvent
@@ -72,9 +76,13 @@ However, if you would want to create your own dataset and expand your labels, yo
              p.drawLine(int(self.prev_point.x()), 0, int(self.prev_point.x()), int(self.pixmap.height()))
              p.drawLine(0, int(self.prev_point.y()), int(self.pixmap.width()), int(self.prev_point.y()))
 
-8.  In order to prevent overfitting our model, we need some images to validate and test our results, which we will take from the taken images earlier. When you navigate the “labels” folder. You need to take some images in your images folder (just a bit) and their respective .txt document in the “labels” folder and put them into the “val” folder, which can be found in the “Project_ML4AI_ALT” folder. (Remember to put their images in the “images” folder and labels in the “labels” folder)
+9.  In order to prevent overfitting our model, we need some images to validate and test our results, which we will take from the taken images earlier. 
 
-9.  Now put all your remaining images and labels into the “train” folder. (Remember to format them “images” and “labels” like the “val” folder) If you did all the steps correctly, both the “train” and “val” folder should have two sub-folders named “images” and “labels”, containing their respective images and labels. Finally, cut the “train” and “val” folders (Shortcut is Ctrl+X) into the directory:
+    When you navigate the “labels” folder. You need to take some images in your images folder (just a bit) and their respective .txt document in the “labels” folder and put them into the “val” folder, which can be found in the “Project_ML4AI_ALT” folder. (Remember to put their images in the “images” folder and labels in the “labels” folder)
+
+10.  Now put all your remaining images and labels into the “train” folder. (Remember to format them “images” and “labels” like the “val” folder).
+
+     If you did all the steps correctly, both the “train” and “val” folder should have two sub-folders named “images” and “labels”, containing their respective images and labels. Finally, cut the “train” and “val” folders (Shortcut is Ctrl+X) into the directory:
 
     [WHERE YOU COPIED THE PROJECT_ML4AI_ALT FOLDER]\yolov7\data
 
@@ -86,11 +94,11 @@ However, if you would want to create your own dataset and expand your labels, yo
 
 3. After you have downloaded the weights for the model, remember to paste them at:
  
-   …\Project_ML4AI_ALT\yolov7
+       …\Project_ML4AI_ALT\yolov7
 
 Now you need to change the number of classes and their labels. Firstly, you need to access the custom_data.yaml file which can be found at:
 
-…\Project_ML4AI_ALT\yolov7\data\custom_data.yaml
+        …\Project_ML4AI_ALT\yolov7\data\custom_data.yaml
 
 Upon opening the file, you will see these lines of code:
 
@@ -108,11 +116,12 @@ Upon opening the file, you will see these lines of code:
     _CHANGE HERE_
 
 Change the “5” value in “nc” to the number of labels you made
+
 Change the “names” list into the names of your labels in the order like in the “images” and “labels” folder
 
 6. Afterwards, you need to go to this directory:
 
-    …\Project_ML4AI_ALT\yolov7\cfg\training
+        …\Project_ML4AI_ALT\yolov7\cfg\training
 
 Here you can see the .yaml files for all the available YOLOv7 models. Depending on the name of the weights model you downloaded earlier, make a copy of that file and name it “yolov7-custom.yaml” (replacing the old one)
 
@@ -131,6 +140,9 @@ Open the yolov7-custom.yaml file you created and change the “5” value in “
     python train.py --batch-size 16 --epochs 100 --img 640 640 --data data/custom_data.yaml --hyp data/hyp.scratch.custom.yaml --cfg cfg/training/yolov7-custom.yaml --weights yolov7-tiny.pt --name yolov7
 
 Note:
+
 For “--batch-size”, it is recommended to use smaller sizes (4 or 8) if you have a PC with worse specifications.
+
 For “--weights”, the code is using the tiny version of YOLOv7, you need to change it to the model which you downloaded before (i.e. yolov7.pt)
+
 YOLOv7 is most efficiently trained on GPUs, but this training command is optimized for CPUs only, if you want training commands that is compatible to GPUs, you can look at links here, here and here.
