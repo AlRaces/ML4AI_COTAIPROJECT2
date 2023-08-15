@@ -114,9 +114,9 @@ For example: If I downloaded the yolov7.pt file earlier, I will make a copy of t
 
 Open the yolov7-custom.yaml file you created and change the “5” value in “nc” (on line 2) to the number of labels you made.
 
-7. To train your model, execute this command:
+7.  To train your model, execute this command:
 
-    python train.py --batch-size 16 --epochs 100 --img 640 640 --data data/custom_data.yaml --hyp data/hyp.scratch.custom.yaml --cfg cfg/training/yolov7-custom.yaml --weights yolov7-tiny.pt --name yolov7
+        python train.py --batch-size 16 --epochs 100 --img 640 640 --data data/custom_data.yaml --hyp data/hyp.scratch.custom.yaml --cfg cfg/training/yolov7-custom.yaml --weights yolov7-tiny.pt --name yolov7
 
 Note:
 For “--batch-size”, it is recommended to use smaller sizes (4 or 8) if you have a PC with worse specifications.
